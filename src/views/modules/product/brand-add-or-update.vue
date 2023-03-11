@@ -13,14 +13,15 @@
                 <el-input v-model="dataForm.descript" placeholder="介绍"></el-input>
             </el-form-item>
             <el-form-item label="显示状态" prop="showStatus">
-                <el-switch v-model="dataForm.showStatus" active-color="#13ce66" inactive-color="#ff4949">
+                <el-switch v-model="dataForm.showStatus" active-color="#13ce66" inactive-color="#ff4949" :active-value="1"
+                    :inactive-value="0">
                 </el-switch>
             </el-form-item>
             <el-form-item label="检索首字母" prop="firstLetter">
                 <el-input v-model="dataForm.firstLetter" placeholder="检索首字母"></el-input>
             </el-form-item>
             <el-form-item label="排序" prop="sort">
-                <el-input v-model="dataForm.sort" placeholder="排序"></el-input>
+                <el-input v-model.number="dataForm.sort" placeholder="排序"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -44,9 +45,9 @@ export default {
                 name: '',
                 logo: '',
                 descript: '',
-                showStatus: '',
+                showStatus: 1,
                 firstLetter: '',
-                sort: ''
+                sort: 0
             },
             dataRule: {
                 name: [
@@ -62,10 +63,30 @@ export default {
                     { required: true, message: '显示状态[0-不显示；1-显示]不能为空', trigger: 'blur' }
                 ],
                 firstLetter: [
-                    { required: true, message: '检索首字母不能为空', trigger: 'blur' }
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value == '') {
+                                callback(new Error('检索首字母不能为空'));
+                            } else if (!/^[a-zA-Z]$/.test(value)) {
+                                callback(new Error('检索首字母必须在a-z或A-Z之间'));
+                            } else {
+                                callback();
+                            }
+                        }, trigger: 'blur'
+                    }
                 ],
                 sort: [
-                    { required: true, message: '排序不能为空', trigger: 'blur' }
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value === '') {
+                                callback(new Error('排序不能为空'));
+                            } else if (!Number.isInteger(value) || value < 0) {
+                                callback(new Error('排序必须为大于0的整数'));
+                            } else {
+                                callback();
+                            }
+                        }, trigger: 'blur'
+                    }
                 ]
             }
         }
@@ -96,7 +117,7 @@ export default {
         },
         // 表单提交
         dataFormSubmit() {
-            this.$refs['dataForm'].validate((valid) => {
+            this.$refs['dataForm'].validate(valid => {
                 if (valid) {
                     this.$http({
                         url: this.$http.adornUrl(`/product/brand/${!this.dataForm.brandId ? 'save' : 'update'}`),

@@ -20,6 +20,9 @@
             <el-table-column prop="name" header-align="center" align="center" label="品牌名">
             </el-table-column>
             <el-table-column prop="logo" header-align="center" align="center" label="品牌logo地址">
+                <template slot-scope="scope">
+                    <img style="width: auto; height: 80px" :src="scope.row.logo"/>
+                </template>
             </el-table-column>
             <el-table-column prop="descript" header-align="center" align="center" label="介绍">
             </el-table-column>
@@ -100,7 +103,7 @@ export default {
             console.log("最新的信息", data)
             let { brandId, showStatus } = data;
             this.$http({
-                url: this.$http.adornUrl('/product/brand/update'),
+                url: this.$http.adornUrl('/product/brand/update/status'),
                 method: 'post',
                 data: this.$http.adornData({ brandId, showStatus }, false)
             }).then(({ data }) => {
