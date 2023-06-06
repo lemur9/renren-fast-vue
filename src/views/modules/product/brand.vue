@@ -57,7 +57,7 @@
       <el-popover v-model="popCatelogSelectVisible" placement="right-end">
         <category-cascader ref="catelogPath" :catelogPath.sync="catelogPath"></category-cascader>
         <div style="text-align: right; margin: 0">
-          <el-button size="mini" type="text" @click="popCatelogSelectVisible = false">取消</el-button>
+          <el-button size="mini" type="text" @click="cancelAddCatelog">取消</el-button>
           <el-button size="mini" type="primary" @click="addCatelogSelect">确定</el-button>
         </div>
         <el-button slot="reference">新增关联</el-button>
@@ -178,6 +178,11 @@ export default {
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(id)
       })
+    },
+    // 取消
+    cancelAddCatelog () {
+      this.popCatelogSelectVisible = false
+      this.$refs.catelogPath.resetData()
     },
     // 删除
     deleteHandle (id) {

@@ -1,7 +1,7 @@
 <template>
   <el-dialog
       :close-on-click-modal="false"
-      :title="!dataForm.id ? '新增' : '修改'"
+      :title="!dataForm.attrGroupId ? '新增' : '修改'"
       :visible.sync="visible"
       @closed="dialogClose"
   >

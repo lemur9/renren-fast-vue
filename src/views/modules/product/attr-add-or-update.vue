@@ -1,7 +1,7 @@
 <template>
   <el-dialog
       :close-on-click-modal="false"
-      :title="!dataForm.id ? '新增' : '修改'"
+      :title="!dataForm.attrId ? '新增' : '修改'"
       :visible.sync="visible"
       @closed="dialogClose"
   >
@@ -239,6 +239,7 @@ export default {
     },
     // 表单提交
     dataFormSubmit () {
+      console.log(this.dataForm.attrGroupId, 111111111111111)
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           this.$http({
