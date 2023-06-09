@@ -398,12 +398,12 @@ export default {
         brandId: [
           {required: true, message: '请选择一个品牌', trigger: 'blur'}
         ],
-        decript: [
-          {required: true, message: '请上传商品详情图集', trigger: 'blur'}
-        ],
-        images: [
-          {required: true, message: '请上传商品图片集', trigger: 'blur'}
-        ],
+        // decript: [
+        //   {required: true, message: '请上传商品详情图集', trigger: 'blur'}
+        // ],
+        // images: [
+        //   {required: true, message: '请上传商品图片集', trigger: 'blur'}
+        // ],
         weight: [
           {
             type: 'number',
@@ -505,7 +505,7 @@ export default {
       row.images[index].defaultImg = 1 // 修改标志位;
       // 修改其他人的标志位
       row.images.forEach((item, idx) => {
-        if (idx != index) {
+        if (idx !== index) {
           row.images[idx].defaultImg = 0
         }
       })
@@ -514,7 +514,7 @@ export default {
       let inputValue = this.inputValue[idx].val
       if (inputValue) {
         // this.dynamicTags.push(inputValue);
-        if (this.dataResp.saleAttrs[idx].valueSelect == '') {
+        if (this.dataResp.saleAttrs[idx].valueSelect === '') {
           this.dataResp.saleAttrs[idx].valueSelect = inputValue
         } else {
           this.dataResp.saleAttrs[idx].valueSelect += ';' + inputValue
@@ -541,7 +541,7 @@ export default {
         item.forEach(attr => {
           let {attrId, attrValues, showDesc} = attr
           // 跳过没有录入值的属性
-          if (attrValues != '') {
+          if (attrValues !== '') {
             if (attrValues instanceof Array) {
               // 多个值用;隔开
               attrValues = attrValues.join(';')
@@ -596,7 +596,7 @@ export default {
         let memberPrices = []
         if (this.dataResp.memberLevels.length > 0) {
           for (let i = 0; i < this.dataResp.memberLevels.length; i++) {
-            if (this.dataResp.memberLevels[i].priviledgeMemberPrice == 1) {
+            if (this.dataResp.memberLevels[i].priviledgeMemberPrice === 1) {
               memberPrices.push({
                 id: this.dataResp.memberLevels[i].id,
                 name: this.dataResp.memberLevels[i].name,
@@ -622,7 +622,7 @@ export default {
             fullPrice: 0.0,
             reducePrice: 0.0,
             priceStatus: 0,
-            memberPrice: new Array().concat(memberPrices)
+            memberPrice: [].concat(memberPrices)
           })
         } else {
           skus.push(res)
@@ -636,7 +636,7 @@ export default {
       let res = null
       if (skus.length > 0) {
         for (let i = 0; i < skus.length; i++) {
-          if (skus[i].descar.join(' ') == descar.join(' ')) {
+          if (skus[i].descar.join(' ') === descar.join(' ')) {
             res = skus[i]
           }
         }
@@ -682,13 +682,15 @@ export default {
           // 先对表单的baseAttrs进行初始化
           data.data.forEach(item => {
             let attrArray = []
-            item.attrs.forEach(attr => {
-              attrArray.push({
-                attrId: attr.attrId,
-                attrValues: '',
-                showDesc: attr.showDesc
+            if (item.attrs != null) {
+              item.attrs.forEach(attr => {
+                attrArray.push({
+                  attrId: attr.attrId,
+                  attrValues: '',
+                  showDesc: attr.showDesc
+                })
               })
-            })
+            }
             this.dataResp.baseAttrs.push(attrArray)
           })
           this.dataResp.steped[0] = 0
@@ -710,7 +712,7 @@ export default {
               method: 'post',
               data: this.$http.adornData(this.spu, false)
             }).then(({data}) => {
-              if (data.code == 0) {
+              if (data.code === 0) {
                 this.$message({
                   type: 'success',
                   message: '新增商品成功!'
@@ -743,7 +745,7 @@ export default {
       var temp = []
 
       // 根据参数列生成指针对象
-      for (var index in list) {
+      for (let index in list) {
         if (typeof list[index] === 'object') {
           point[index] = {parent: pIndex, count: 0}
           pIndex = index
