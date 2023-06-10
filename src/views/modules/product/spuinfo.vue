@@ -11,8 +11,8 @@
       <el-table-column align="center" header-align="center" label="id" prop="id"></el-table-column>
       <el-table-column align="center" header-align="center" label="名称" prop="spuName"></el-table-column>
       <el-table-column align="center" header-align="center" label="描述" prop="spuDescription"></el-table-column>
-      <el-table-column align="center" header-align="center" label="分类" prop="catalogId"></el-table-column>
-      <el-table-column align="center" header-align="center" label="品牌" prop="brandId"></el-table-column>
+      <el-table-column align="center" header-align="center" label="分类" prop="catalogName"></el-table-column>
+      <el-table-column align="center" header-align="center" label="品牌" prop="brandName"></el-table-column>
       <el-table-column align="center" header-align="center" label="重量" prop="weight"></el-table-column>
       <el-table-column align="center" header-align="center" label="上架状态" prop="publishStatus">
         <template slot-scope="scope">

@@ -16,7 +16,6 @@
         clearable
         filterable
         placeholder="试试搜索：手机"
-        @close="resetData"
     ></el-cascader>
   </div>
 </template>
